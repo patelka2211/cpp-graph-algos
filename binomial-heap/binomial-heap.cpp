@@ -29,6 +29,24 @@ public:
 class binomial_heap
 {
 private:
+    node *find_min()
+    {
+        node *pointer = this->start, *min_node = pointer;
+        int min = 1e9;
+
+        while (pointer != NULL)
+        {
+            if (min > pointer->value)
+            {
+                min = pointer->value;
+                min_node = pointer;
+            }
+            pointer = pointer->sibling;
+        }
+
+        return min_node;
+    }
+
 public:
     node *start;
     binomial_heap()
