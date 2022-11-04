@@ -28,6 +28,9 @@ public:
 
 node *sort_heap(node *heap)
 {
+    if (heap == NULL)
+        return heap;
+
     node *left_pointer = heap, *right_pointer;
 
     while (left_pointer->sibling != NULL)
@@ -60,12 +63,17 @@ node *sort_heap(node *heap)
 
 node *perform_union(node *heap1, node *heap2)
 {
+    if (heap1 == NULL && heap2 == NULL)
+        return heap1;
+    else if (heap1 == NULL)
+        return sort_heap(heap2);
+    else if (heap2 == NULL)
+        return sort_heap(heap1);
+
     node *pointer = heap1;
 
     while (pointer->sibling != NULL)
-    {
         pointer = pointer->sibling;
-    }
 
     pointer->sibling = heap2;
 
@@ -125,6 +133,9 @@ class binomial_heap
 private:
     node *find_min()
     {
+        if (this->start == NULL)
+            return NULL;
+
         node *pointer = this->start, *min_node = pointer;
         int min = 1e9;
 
@@ -211,9 +222,20 @@ public:
     void traverse()
     {
         node *pointer = this->start;
+
+        if (pointer == NULL)
+            cout << endl
+                 << "Heap is empty" << endl;
+
         do
         {
-            cout << pointer->value << " : " << pointer->order << ", ";
+            if (pointer->sibling == NULL)
+            {
+                cout << "[ Value: " << pointer->value << ", Order: " << pointer->order << " ]";
+                break;
+            }
+            cout << "[ Value: " << pointer->value << ", Order: " << pointer->order << " ]"
+                 << ", ";
             pointer = pointer->sibling;
         } while (pointer != NULL);
         cout << endl;
@@ -226,11 +248,11 @@ int32_t main()
 
     binomial_heap b_heap = binomial_heap();
 
+    b_heap.add_node(1);
     b_heap.add_node(7);
     b_heap.add_node(2);
     b_heap.add_node(4);
     b_heap.add_node(17);
-    b_heap.add_node(1);
     b_heap.add_node(11);
     b_heap.add_node(6);
     b_heap.add_node(8);
@@ -238,11 +260,9 @@ int32_t main()
     b_heap.add_node(10);
     b_heap.add_node(20);
 
+    b_heap.traverse();
+
     int min_value = b_heap.extract_min();
-
-    cout << min_value << endl;
-
-    min_value = b_heap.extract_min();
 
     cout << min_value << endl;
 
