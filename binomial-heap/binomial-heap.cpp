@@ -224,8 +224,10 @@ public:
         node *pointer = this->start;
 
         if (pointer == NULL)
-            cout << endl
-                 << "Heap is empty" << endl;
+        {
+            cout << "Empty heap" << endl;
+            return;
+        }
 
         do
         {
@@ -247,26 +249,59 @@ int32_t main()
     flash;
 
     binomial_heap b_heap = binomial_heap();
+    int choice, new_value, min;
 
-    b_heap.add_node(1);
-    b_heap.add_node(7);
-    b_heap.add_node(2);
-    b_heap.add_node(4);
-    b_heap.add_node(17);
-    b_heap.add_node(11);
-    b_heap.add_node(6);
-    b_heap.add_node(8);
-    b_heap.add_node(15);
-    b_heap.add_node(10);
-    b_heap.add_node(20);
+    while (true)
+    {
+        cout << "1) Insert in heap." << endl;
+        cout << "2) Extract minimum." << endl;
+        cout << "3) Print heap" << endl;
+        cout << "4) Exit" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+        cout << endl;
 
-    b_heap.traverse();
+        if (choice == 4)
+        {
+            cout << "Bye!!" << endl;
+            break;
+        }
 
-    int min_value = b_heap.extract_min();
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter value: ";
+            cin >> new_value;
+            cout << endl;
+            b_heap.add_node(new_value);
+            cout << "New node of value " << new_value << " inserted" << endl
+                 << endl;
+            break;
 
-    cout << min_value << endl;
+        case 2:
+            if (b_heap.start == NULL)
+            {
+                cout << "Empty heap" << endl
+                     << endl;
+                break;
+            }
 
-    b_heap.traverse();
+            min = b_heap.extract_min();
+
+            cout << "Minimum value was: " << min << endl
+                 << endl;
+            break;
+
+        case 3:
+            b_heap.traverse();
+            cout << endl;
+            break;
+
+        default:
+            cout << "Enter valid value" << endl;
+            break;
+        }
+    }
 
     return 0;
 }
